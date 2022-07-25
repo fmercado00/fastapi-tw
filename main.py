@@ -4,7 +4,11 @@ from fastapi import FastAPI, Body, Query, Path, status, Header, Form, File, Uplo
 
 app = FastAPI()
 
-@app.get(path="/", tags=["Service"])
+@app.get(path="/"
+, tags=["Ping"]
+, summary="Ping Service to discover if the service is on-line"
+,  status_code=status.HTTP_200_OK
+)
 def home():
     """
     # Default endpoint for the service
