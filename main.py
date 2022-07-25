@@ -1,7 +1,10 @@
 from typing import Optional, List
 from models.base.tweet import Tweet
 from models.base.users_base_model import UserBase
+from models.request.users_request_model import UserRequestModel
 from models.response.user_response_model import UserResponseModel
+import json
+
 
 # Fast API
 from fastapi import FastAPI, Body, Query, Path, status, Header, Form, File, UploadFile, Depends, HTTPException, Cookie
@@ -50,8 +53,30 @@ async def login():
     summary = "Register a new user",
     tags=["Users"]
 )
-async def signup():
-    pass
+async def signup(user: UserRequestModel = Body(...)):
+    """
+    # Signup
+
+    ## This path operation register a user in the app.
+
+    ### Parameters:
+
+    - user: UserRequestModel
+
+    ### Returns:
+    User: UserResponseModel. Return response model without password.
+    """
+    user_dict = user.dict()
+    with open("users.json", "r+", encoding="utf-8") as f:
+        results = json.loads(f.read())
+        user_dict["user_id"] = str(user_dict["user_id"])
+        user_dict["birth_date"] = str(user_dict["birth_date"])
+        results.append(user_dict)
+        f.seek(0)
+        f.write(json.dumps(results, indent=4))
+    userResponse = UserResponseModel(**user_dict)
+    return userResponse
+
 
 @app.get(
     path="/v1/users",
