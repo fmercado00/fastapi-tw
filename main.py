@@ -180,12 +180,12 @@ async def show_a_tweet():
 
 @app.post(
     path="/v1/tweets",
-    response_model=List[Tweet],
+    response_model=Tweet,
     status_code=status.HTTP_201_CREATED,
     summary = "Post a tweet",
     tags=["Tweets"]
 )
-async def post_tweet():
+async def post_tweet(tweet: Tweet = Body(...)):
     """
     # Post a tweet
 
@@ -193,12 +193,26 @@ async def post_tweet():
 
     ### Parameters:
 
-    - Tweet: Tweet. The tweet to be posted.
+    - tweet: Tweet. The tweet to be posted.
 
     ### Returns:
-    Status: Status. Shows if the post was successful or not.
+    status: Status. Json thtat shows if the post was successful or not.
     """
-    pass
+
+    tweet_dict = tweet.dict()
+    with open("tweets.json", "r+", encoding="utf-8") as f:
+        results = json.loads(f.read())
+        tweet_dict["tweet_id"] = str(tweet_dict["tweet_id"])
+        tweet_dict["created_at"] = str(tweet_dict["created_at"])
+        tweet_dict["by"]["user_id"] = str(tweet_dict["by"]["user_id"])
+        tweet_dict["by"]["birth_date"] = str(tweet_dict["by"]["birth_date"])
+        tweet_dict["updated_at"] = str(tweet_dict["updated_at"])
+        results.append(tweet_dict)
+        f.seek(0)
+        f.write(json.dumps(results, indent=4))
+    return tweet
+
+   
 
 @app.delete(
     path="/v1/tweets/{tweet_id}",

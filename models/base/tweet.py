@@ -9,7 +9,7 @@ from models.base.users_base_model import UserBase
 from pydantic import BaseModel, EmailStr, Field
 
 class Tweet(BaseModel):
-    twet_id: UUID = Field(...)
+    tweet_id: UUID = Field(...)
     content: str = Field(..., min_lenght=2, max_length=256)
     created_at: datetime = Field(..., deault=datetime.now())
     updated_at: Optional[datetime] = Field(..., deault=None)
