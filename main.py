@@ -1,4 +1,5 @@
 from typing import Optional, List
+from models.base.tweet import Tweet
 from models.base.users_base_model import UserBase
 from models.response.user_response_model import UserResponseModel
 
@@ -35,11 +36,11 @@ def home():
 @app.post(
     path="/v1/users/login",
     response_model=UserResponseModel,
-    status_code=status.HTTP_200_CREATED,
+    status_code=status.HTTP_201_CREATED,
     summary = "Login a registered user",
     tags=["Users"]
 )
-def login():
+async def login():
     pass
 
 @app.post(
@@ -49,7 +50,7 @@ def login():
     summary = "Register a new user",
     tags=["Users"]
 )
-def signup():
+async def signup():
     pass
 
 @app.get(
@@ -59,7 +60,19 @@ def signup():
     summary = "List all users",
     tags=["Users"]
 )
-def show_all_users():
+async def show_all_users():
+    """
+    # Show all users
+
+    ## This path operation gets all user in the app.
+
+    ### Parameters:
+
+    - None
+
+    ### Returns:
+    List: UserResponseModel. Shows all users with the response model.
+    """
     pass
 
 @app.get(
@@ -69,27 +82,137 @@ def show_all_users():
     summary = "Get a specific user",
     tags=["Users"]
 )
-def show_user():
+async def show_user():
     pass
 
 @app.delete(
     path="/v1/users/{user_id}",
     response_model=UserResponseModel,
     status_code=status.HTTP_200_OK,
-    summary = "Register a new user",
+    summary = "Delete a user",
     tags=["Users"]
 )
-def delete_user():
+async def delete_user():
     pass
 
 @app.put(
     path="/v1/users/{user_id}",
     response_model=UserResponseModel,
-    status_code=status.HTTP_201_CREATED,
-    summary = "Register a new user",
+    status_code=status.HTTP_200_OK,
+    summary = "Update a user",
     tags=["Users"]
 )
-def delete_user():
+async def delete_user():
     pass
 
 ## Tweets
+
+@app.get(
+    path="/v1/tweets",
+    response_model=List[Tweet],
+    status_code=status.HTTP_200_OK,
+    summary = "List all tweets",
+    tags=["Tweets"]
+)
+async def show_all_tweets():
+    """
+    # Show all tweets
+
+    ## This path operation gets all tweets in the app.
+
+    ### Parameters:
+
+    - None
+
+    ### Returns:
+    List: Tweet. Shows all tweets using base model.
+    """
+    pass
+
+@app.get(
+    path="/v1/tweets/{tweet_id}",
+    response_model=Tweet,
+    status_code=status.HTTP_200_OK,
+    summary = "List all tweets",
+    tags=["Tweets"]
+)
+async def show_a_tweet():
+    """
+    # Show a tweet 
+
+    ## This path operation gets a tweet by id.
+
+    ### Parameters:
+
+    - tweet_id: str. The id of the tweet.
+
+    ### Returns:
+    Twwet: Tweet. Shows a tweet using base model.
+    """
+    pass
+
+@app.post(
+    path="/v1/tweets",
+    response_model=List[Tweet],
+    status_code=status.HTTP_201_CREATED,
+    summary = "Post a tweet",
+    tags=["Tweets"]
+)
+async def post_tweet():
+    """
+    # Post a tweet
+
+    ## This path operation post a tweet in the app.
+
+    ### Parameters:
+
+    - Tweet: Tweet. The tweet to be posted.
+
+    ### Returns:
+    Status: Status. Shows if the post was successful or not.
+    """
+    pass
+
+@app.delete(
+    path="/v1/tweets/{tweet_id}",
+    response_model=Tweet,
+    status_code=status.HTTP_200_OK,
+    summary = "Delete a tweet",
+    tags=["Tweets"]
+)
+async def delete_tweet():
+    """
+    # Delete a tweet
+
+    ## This path operation delete a tweet in the app.
+
+    ### Parameters:
+
+    - tweet_id: str. The id of the tweet.
+
+    ### Returns:
+    Status: Status. Shows if the tweet was successfully deleted or not.
+    """
+    pass
+
+@app.put(
+    path="/v1/tweets/{tweet_id}",
+    response_model=Tweet,
+    status_code=status.HTTP_200_OK,
+    summary = "Update a tweet",
+    tags=["Tweets"]
+)
+async def update_tweet():
+    """
+    # Update a tweet
+
+    ## This path operation update a tweet in the app.
+
+    ### Parameters:
+
+    - tweet_id: str. The id of the tweet.
+
+    ### Returns:
+    Status: Status. Shows if the tweet was successfully updated or not.
+    """
+    pass

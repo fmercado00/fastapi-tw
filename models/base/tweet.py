@@ -1,7 +1,6 @@
 # Python
 from datetime import date, datetime
 from email.policy import default
-from types import NoneType
 from typing import Optional
 from uuid import UUID
 from models.base.users_base_model import UserBase
