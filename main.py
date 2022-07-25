@@ -98,7 +98,9 @@ async def show_all_users():
     ### Returns:
     List: UserResponseModel. Shows all users with the response model.
     """
-    pass
+    with open("users.json", "r", encoding="utf-8") as f:
+        results = json.loads(f.read())
+        return [UserResponseModel(**user) for user in results]
 
 @app.get(
     path="/v1/users/{user_id}",
