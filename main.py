@@ -154,7 +154,9 @@ async def show_all_tweets():
     ### Returns:
     List: Tweet. Shows all tweets using base model.
     """
-    pass
+    with open("tweets.json", "r", encoding="utf-8") as f:
+        return json.loads(f.read())
+
 
 @app.get(
     path="/v1/tweets/{tweet_id}",
